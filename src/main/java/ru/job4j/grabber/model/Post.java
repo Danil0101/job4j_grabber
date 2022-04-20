@@ -18,6 +18,53 @@ public class Post {
         this.created = created;
     }
 
+    public Post(String title, String link, String description, LocalDateTime created) {
+        this.title = title;
+        this.link = link;
+        this.description = description;
+        this.created = created;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -28,25 +75,14 @@ public class Post {
         }
 
         Post post = (Post) o;
-
         if (id != post.id) {
             return false;
         }
-        if (!Objects.equals(title, post.title)) {
-            return false;
-        }
-        if (!Objects.equals(link, post.link)) {
-            return false;
-        }
-        return Objects.equals(created, post.created);
+        return Objects.equals(link, post.link);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (link != null ? link.hashCode() : 0);
-        result = 31 * result + (created != null ? created.hashCode() : 0);
-        return result;
+        return 31 * id + (link != null ? link.hashCode() : 0);
     }
 }
