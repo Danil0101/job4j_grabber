@@ -85,4 +85,15 @@ public class Post {
     public int hashCode() {
         return 31 * id + (link != null ? link.hashCode() : 0);
     }
+
+    @Override
+    public String toString() {
+        return "Post{"
+                + " id=" + id
+                + ", title='" + title + '\''
+                + ", link='" + link + '\''
+                + ", description='" + description + '\''
+                + ", created=" + created
+                + '}';
+    }
 }
