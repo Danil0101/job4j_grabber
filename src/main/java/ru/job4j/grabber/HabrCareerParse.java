@@ -24,19 +24,23 @@ public class HabrCareerParse implements Parse {
     }
 
     @Override
-    public List<Post> list() throws IOException {
+    public List<Post> list() {
         List<Post> postList = new ArrayList<>();
         for (int i = 1; i <= PAGES_COUNT; i++) {
             Connection connection = Jsoup.connect(String.format("%s?page=%d", PAGE_LINK, i));
-            Document document = connection.get();
-            Elements rows = document.select(".vacancy-card__inner");
-            rows.forEach(row -> {
-                try {
-                    postList.add(parsePost(row));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            try {
+                Document document = connection.get();
+                Elements rows = document.select(".vacancy-card__inner");
+                rows.forEach(row -> {
+                    try {
+                        postList.add(parsePost(row));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return postList;
     }
@@ -58,7 +62,7 @@ public class HabrCareerParse implements Parse {
         return descriptionElement.text();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         List<Post> list = new HabrCareerParse(new HabrCareerDateTimeParser()).list();
         list.forEach(System.out::println);
     }

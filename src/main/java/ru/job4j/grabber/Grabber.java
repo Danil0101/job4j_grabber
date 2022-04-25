@@ -61,12 +61,8 @@ public class Grabber implements Grab {
             JobDataMap map = context.getJobDetail().getJobDataMap();
             Store store = (Store) map.get("store");
             Parse parse = (Parse) map.get("parse");
-            try {
-                List<Post> posts = parse.list();
-                posts.forEach(store::save);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            List<Post> posts = parse.list();
+            posts.forEach(store::save);
         }
     }
 
