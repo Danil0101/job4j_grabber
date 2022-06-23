@@ -31,7 +31,7 @@ public class CinemaTest {
         assertThat(sessions, is(Arrays.asList(new Session3D())));
     }
 
-    @Test(expected = NoTicketCinemaException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenBuyTheyAlreadyBought() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -41,7 +41,7 @@ public class CinemaTest {
         Ticket ticket2 = cinema.buy(account, 1, 1, date);
     }
 
-    @Test(expected = InvalidDateCinemaException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenBuyTheyInvalidDate() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -50,7 +50,7 @@ public class CinemaTest {
         Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 
-    @Test(expected = InvalidPlaceCinemaException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenBuyTheyInvalidPlace() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
