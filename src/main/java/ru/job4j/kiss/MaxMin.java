@@ -16,6 +16,9 @@ public class MaxMin {
     }
 
     public <T> T findMaxOrMin(List<T> value, BiPredicate<T, T> predicate) {
+        if (value == null || value.isEmpty()) {
+            return null;
+        }
         T result = value.get(0);
         for (int i = 1; i < value.size(); i++) {
             if (predicate.test(result, value.get(i))) {

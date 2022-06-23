@@ -1,7 +1,9 @@
 package ru.job4j.kiss;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,13 +21,19 @@ public class MaxMinTest {
         list = List.of(5, 3, 7, 4, 1);
     }
 
-    @org.junit.Test
-    public void max() {
+    @Test
+    public void whenMax() {
         assertEquals(7, (int) maxMin.max(list, comparator));
     }
 
-    @org.junit.Test
-    public void min() {
+    @Test
+    public void whenMin() {
         assertEquals(1, (int) maxMin.min(list, comparator));
+    }
+
+    @Test
+    public void whenListEmptyThenNull() {
+        assertNull(maxMin.min(new ArrayList<>(), comparator));
+        assertNull(maxMin.max(new ArrayList<>(), comparator));
     }
 }
