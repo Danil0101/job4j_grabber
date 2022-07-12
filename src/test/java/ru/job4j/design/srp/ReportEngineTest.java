@@ -91,4 +91,47 @@ public class ReportEngineTest {
                 .append(worker1.getSalary()).append(";").append(LS);
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
+
+    @Test
+    public void whenJSON() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        Report report = new ReportJSON(store);
+        String template =
+                "[{\"name\":\"%s\",\"hired\":\"%s\",\"fired\":\"%s\",\"salary\":\"%.2f\"}]";
+        String expect = String.format(template,
+                worker.getName(),
+                worker.getHired().getTime(),
+                worker.getFired().getTime(),
+                worker.getSalary());
+        assertThat(report.generate(em -> true), is(expect));
+    }
+
+    @Test
+    public void whenXML() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        Report report = new ReportXML(store);
+        StringBuilder expect = new StringBuilder()
+                .append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>").append(LS)
+                .append("<employees>").append(LS)
+                .append("    <employees>").append(LS)
+                .append("        <fired>")
+                .append(DATE_FORMAT_XML.format(worker.getFired().getTime()))
+                .append("</fired>").append(LS)
+                .append("        <hired>")
+                .append(DATE_FORMAT_XML.format(worker.getHired().getTime()))
+                .append("</hired>").append(LS)
+                .append("        <name>")
+                .append(worker.getName()).append("</name>").append(LS)
+                .append("        <salary>")
+                .append(worker.getSalary()).append("</salary>").append(LS)
+                .append("    </employees>").append(LS)
+                .append("</employees>").append(LS);
+        assertThat(report.generate(em -> true).replaceAll("\\r?\\n", LS), is(expect.toString()));
+    }
 }
